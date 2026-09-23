@@ -1,0 +1,74 @@
+@model TalentManagement.ViewModels.AttributeCreateViewModel
+@{
+    ViewData["Title"] = "Create Dynamic Attribute";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                <h1 class="h4 fw-bold mb-0">Create Dynamic Attribute</h1>
+                <a asp-action="Index" class="btn btn-outline-dark btn-sm">Cancel</a>
+            </div>
+
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3 fw-semibold"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" placeholder="e.g. Apache Hadoop, GPA, Dancing Skills..." autofocus />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="CategoryId" class="form-label"></label>
+                    <select asp-for="CategoryId" asp-items="Model.CategoryOptions" class="form-select">
+                        <option value="">-- Select Category --</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="AttributeType" class="form-label"></label>
+                    <select asp-for="AttributeType" asp-items="Html.GetEnumSelectList<TalentManagement.Models.Enums.AttributeType>()" class="form-select" id="attributeTypeSelect">
+                    </select>
+                    <span asp-validation-for="AttributeType" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4" id="optionsGroup" style="display: none;">
+                    <label asp-for="OptionsRaw" class="form-label"></label>
+                    <textarea asp-for="OptionsRaw" class="form-control" rows="5" placeholder="Enter each option on a new line:&#10;None&#10;Essentials&#10;Pro&#10;Expert"></textarea>
+                    <span asp-validation-for="OptionsRaw" class="text-danger small"></span>
+                    <div class="form-text text-muted">Required for Dropdown attributes. Enter one option per line.</div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-dark">Create Attribute</button>
+                    <a asp-action="Index" class="btn btn-outline-dark">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const select = document.getElementById("attributeTypeSelect");
+            const group = document.getElementById("optionsGroup");
+
+            function toggleOptions() {
+                // Dropdown has enum value 4
+                if (select.value === "4" || select.options[select.selectedIndex].text.toLowerCase() === "dropdown") {
+                    group.style.display = "block";
+                } else {
+                    group.style.display = "none";
+                }
+            }
+
+            select.addEventListener("change", toggleOptions);
+            toggleOptions();
+        });
+    </script>
+}

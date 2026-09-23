@@ -1,0 +1,63 @@
+@model List<TalentManagement.Models.Entities.Project>
+@{
+    ViewData["Title"] = "My Projects";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+    <div>
+        <h1 class="h3 fw-bold mb-0">My Portfolio Projects</h1>
+        <p class="text-muted small mb-0">Projects showcase your skills and match with job position project filters</p>
+    </div>
+    <div>
+        <a asp-action="Create" class="btn btn-dark btn-sm">+ Add Project</a>
+    </div>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="row g-3">
+        @foreach (var proj in Model)
+        {
+            <div class="col-md-6">
+                <div class="card h-100 p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h2 class="h5 fw-bold mb-0">@proj.Title</h2>
+                        <span class="small text-muted">
+                            @proj.StartDate.ToString("yyyy-MM") &ndash; @(proj.EndDate?.ToString("yyyy-MM") ?? "Present")
+                        </span>
+                    </div>
+
+                    <p class="text-muted small mb-3 flex-grow-1">@proj.Description</p>
+
+                    @if (proj.ProjectTags != null && proj.ProjectTags.Any())
+                    {
+                        <div class="mb-3 d-flex flex-wrap gap-1">
+                            @foreach (var pt in proj.ProjectTags)
+                            {
+                                <span class="badge bg-secondary">@pt.Tag?.Name</span>
+                            }
+                        </div>
+                    }
+
+                    <div class="d-flex justify-content-end gap-2 pt-2 border-top mt-auto">
+                        <a asp-action="Edit" asp-route-id="@proj.Id" class="btn btn-sm btn-dark">Edit</a>
+                        <form asp-action="Delete" asp-route-id="@proj.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this project?');">
+                            <input type="hidden" name="rowVersion" value="@(proj.RowVersion != null ? Convert.ToBase64String(proj.RowVersion) : "")" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="card p-5 text-center text-muted">
+        <h2 class="h5 fw-semibold mb-2">No Projects Added Yet</h2>
+        <p class="mb-3">Add your portfolio projects and tag them with relevant technologies to match job openings.</p>
+        <div>
+            <a asp-action="Create" class="btn btn-dark">+ Add Your First Project</a>
+        </div>
+    </div>
+}

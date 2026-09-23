@@ -1,0 +1,64 @@
+@model TalentManagement.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <div class="text-center mb-4">
+                <h2 class="h3 fw-bold">Create an Account</h2>
+                <p class="text-muted">Register as a Candidate or Recruiter</p>
+            </div>
+
+            <form asp-action="Register" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3 fw-semibold"></div>
+
+                <div class="mb-3">
+                    <label asp-for="FullName" class="form-label"></label>
+                    <input asp-for="FullName" class="form-control" placeholder="e.g. Rakib Hasan" />
+                    <span asp-validation-for="FullName" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" placeholder="name@example.com" />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Role" class="form-label"></label>
+                    <select asp-for="Role" class="form-select">
+                        <option value="Candidate">Candidate (Apply to jobs, build dynamic CVs, manage projects)</option>
+                        <option value="Recruiter">Recruiter (Post jobs, define dynamic attributes, review candidates)</option>
+                    </select>
+                    <span asp-validation-for="Role" class="text-danger small"></span>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" class="form-control" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="ConfirmPassword" class="form-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-dark w-100 mb-3">Create Account</button>
+
+                <div class="text-center">
+                    <span class="text-muted">Already have an account?</span>
+                    <a asp-action="Login" class="fw-semibold ms-1">Sign in here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

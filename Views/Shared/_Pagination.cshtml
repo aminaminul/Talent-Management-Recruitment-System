@@ -1,0 +1,43 @@
+@model dynamic
+
+@{
+    int totalPages = 0;
+    int pageIndex = 1;
+    bool hasPrev = false;
+    bool hasNext = false;
+    if (Model != null)
+    {
+        totalPages = (int)Model.TotalPages;
+        pageIndex = (int)Model.PageIndex;
+        hasPrev = (bool)Model.HasPreviousPage;
+        hasNext = (bool)Model.HasNextPage;
+    }
+}
+
+@if (totalPages > 1)
+{
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(!hasPrev ? "disabled" : "")">
+                <a class="page-link" href="?page=@(pageIndex - 1)&search=@(Context.Request.Query["search"])&categoryId=@(Context.Request.Query["categoryId"])&status=@(Context.Request.Query["status"])">
+                    &laquo; Previous
+                </a>
+            </li>
+
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == pageIndex ? "active" : "")">
+                    <a class="page-link" href="?page=@i&search=@(Context.Request.Query["search"])&categoryId=@(Context.Request.Query["categoryId"])&status=@(Context.Request.Query["status"])">
+                        @i
+                    </a>
+                </li>
+            }
+
+            <li class="page-item @(!hasNext ? "disabled" : "")">
+                <a class="page-link" href="?page=@(pageIndex + 1)&search=@(Context.Request.Query["search"])&categoryId=@(Context.Request.Query["categoryId"])&status=@(Context.Request.Query["status"])">
+                    Next &raquo;
+                </a>
+            </li>
+        </ul>
+    </nav>
+}

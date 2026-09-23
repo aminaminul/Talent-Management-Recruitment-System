@@ -1,0 +1,155 @@
+@model TalentManagement.ViewModels.CvCreateEditViewModel
+@{
+    ViewData["Title"] = (Model.CvId.HasValue ? "Edit CV" : "Create CV") + " - " + Model.PositionTitle;
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <partial name="_ConcurrencyAlert" />
+
+        @if (!string.IsNullOrEmpty(ViewBag.ValidationAlert as string))
+        {
+            <div class="alert alert-danger mb-4">
+                <strong>[CANNOT PUBLISH]</strong> @ViewBag.ValidationAlert
+            </div>
+        }
+
+        <div class="card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+                <div>
+                    <h1 class="h4 fw-bold mb-1">@(Model.CvId.HasValue ? "Edit Application CV" : "Create Application CV")</h1>
+                    <div class="text-muted small">
+                        Position: <strong>@Model.PositionTitle</strong> &bull; Status:
+                        <span class="badge @(Model.Status == TalentManagement.Models.Enums.CvStatus.Published ? "bg-dark" : "bg-secondary")">
+                            @Model.Status
+                        </span>
+                    </div>
+                </div>
+                <a asp-action="MyCvs" class="btn btn-outline-dark btn-sm">Cancel</a>
+            </div>
+
+            <div class="p-3 bg-light rounded mb-4">
+                <div class="small fw-semibold text-uppercase text-muted mb-1">Position Overview</div>
+                <div class="small text-muted">@Model.PositionDescription</div>
+            </div>
+
+            <form asp-action="Save" method="post">
+                <input type="hidden" asp-for="CvId" />
+                <input type="hidden" asp-for="PositionId" />
+                <input type="hidden" asp-for="PositionTitle" />
+                <input type="hidden" asp-for="PositionDescription" />
+                <input type="hidden" asp-for="RowVersion" />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3 fw-semibold"></div>
+
+                <div class="mb-4">
+                    <h2 class="h5 fw-bold mb-1">Position Dynamic Attributes</h2>
+                    <p class="text-muted small mb-3">
+                        Fields marked with an asterisk (<span class="text-danger fw-bold">*</span>) are required by the recruiter before you can publish your CV. You can save your progress as a draft at any time.
+                    </p>
+
+                    @if (Model.Attributes != null && Model.Attributes.Any())
+                    {
+                        @for (int i = 0; i < Model.Attributes.Count; i++)
+                        {
+                            var attr = Model.Attributes[i];
+                            <div class="mb-3 p-3 border rounded @(attr.HasValidationError ? "border-dark bg-light" : "")">
+                                <input type="hidden" asp-for="Attributes[i].AttributeDefinitionId" />
+                                <input type="hidden" asp-for="Attributes[i].AttributeName" />
+                                <input type="hidden" asp-for="Attributes[i].AttributeType" />
+                                <input type="hidden" asp-for="Attributes[i].CategoryName" />
+                                <input type="hidden" asp-for="Attributes[i].IsRequired" />
+                                <input type="hidden" asp-for="Attributes[i].DisplayOrder" />
+
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <label class="form-label mb-0 fw-bold">
+                                        @attr.AttributeName
+                                        @if (attr.IsRequired)
+                                        {
+                                            <span class="text-danger fw-bold" title="Required">*</span>
+                                        }
+                                    </label>
+                                    <span class="badge bg-secondary small">@attr.CategoryName</span>
+                                </div>
+
+                                @* Dynamically render appropriate control based on AttributeType *@
+                                @switch (attr.AttributeType)
+                                {
+                                    case TalentManagement.Models.Enums.AttributeType.String:
+                                        <input type="text"
+                                               asp-for="Attributes[i].Value"
+                                               class="form-control @(attr.HasValidationError ? "border-dark" : "")"
+                                               placeholder="Enter @attr.AttributeName..." />
+                                        break;
+
+                                    case TalentManagement.Models.Enums.AttributeType.Number:
+                                        <input type="number"
+                                               step="any"
+                                               asp-for="Attributes[i].Value"
+                                               class="form-control @(attr.HasValidationError ? "border-dark" : "")"
+                                               placeholder="Enter numeric value..." />
+                                        break;
+
+                                    case TalentManagement.Models.Enums.AttributeType.Boolean:
+                                        <div class="form-check mt-2">
+                                            <input type="hidden" name="Attributes[@i].Value" value="false" />
+                                            <input type="checkbox"
+                                                   id="attr_bool_@i"
+                                                   name="Attributes[@i].Value"
+                                                   value="true"
+                                                   class="form-check-input"
+                                                   @(attr.Value == "true" ? "checked" : "") />
+                                            <label class="form-check-label" for="attr_bool_@i">
+                                                Yes / Confirmed
+                                            </label>
+                                        </div>
+                                        break;
+
+                                    case TalentManagement.Models.Enums.AttributeType.Dropdown:
+                                        <select asp-for="Attributes[i].Value"
+                                                class="form-select @(attr.HasValidationError ? "border-dark" : "")">
+                                            <option value="">-- Select an option --</option>
+                                            @foreach (var opt in attr.DropdownOptions)
+                                            {
+                                                <option value="@opt" selected="@(attr.Value == opt)">@opt</option>
+                                            }
+                                        </select>
+                                        break;
+                                }
+
+                                @if (attr.HasValidationError)
+                                {
+                                    <div class="text-danger small mt-1 fw-semibold">
+                                        &bull; @attr.ValidationErrorMessage
+                                    </div>
+                                }
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-secondary mb-0">
+                            No attributes have been configured for this position.
+                        </div>
+                    }
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                    <a asp-action="MyCvs" class="btn btn-outline-dark">Cancel</a>
+                    <div class="d-flex gap-2">
+                        <button type="submit" name="submitType" value="draft" class="btn btn-outline-dark">
+                            Save as Draft
+                        </button>
+                        <button type="submit" name="submitType" value="publish" class="btn btn-dark">
+                            Publish CV &rarr;
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

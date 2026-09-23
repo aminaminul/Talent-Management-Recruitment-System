@@ -1,0 +1,78 @@
+# =========================
+# Visual Studio
+# =========================
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vcxproj.user
+*.vcxproj.filters
+
+# Visual Studio folders
+.vs/
+.vscode/
+
+# Build folders
+bin/
+obj/
+Debug/
+Release/
+
+# Rider
+.idea/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+
+# MSBuild generated files
+*.exe
+*.dll
+*.pdb
+*.cache
+*.ilk
+*.log
+*.tlog
+*.idb
+*.iobj
+*.ipdb
+*.sbr
+*.lastcodeanalysissucceeded
+
+# Others
+*.dbmdl
+*.bak
+*.backup
+*.BLOB
+*.opendb
+_ReSharper*/
+*.resharper.user
+*.DotSettings.user
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Windows specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Others
+*.tmp
+*.temp
+*.log
+*.vspscc
+*_i.c
+*_p.c
+*_h.h
+*.generated.cs
+
+# Node / npm (if using front-end in VS)
+node_modules/
+dist/
+ 

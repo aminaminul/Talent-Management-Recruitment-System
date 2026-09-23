@@ -1,0 +1,169 @@
+@model TalentManagement.ViewModels.PositionCandidateCvsViewModel
+@{
+    ViewData["Title"] = "Candidate Applications - " + Model.PositionTitle;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+    <div>
+        <h1 class="h3 fw-bold mb-0">Candidate Applications</h1>
+        <div class="text-muted small">
+            Position: <strong>@Model.PositionTitle</strong> &bull; Total Candidates: @Model.CandidateCvs.Count
+        </div>
+    </div>
+    <div>
+        <a asp-action="Details" asp-route-id="@Model.PositionId" class="btn btn-outline-dark btn-sm">&larr; Back to Position</a>
+    </div>
+</div>
+
+<div class="card p-3 mb-4 bg-light">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <span class="fw-semibold me-2">Project Filter Tags:</span>
+            @if (Model.FilterTags != null && Model.FilterTags.Any())
+            {
+                @foreach (var tag in Model.FilterTags)
+                {
+                    <span class="badge bg-secondary me-1">@tag</span>
+                }
+            }
+            else
+            {
+                <span class="text-muted small">None configured</span>
+            }
+        </div>
+        <div class="col-md-4 text-md-end">
+            <span class="small text-muted">Max Recent Projects Shown: <strong>@Model.MaxRecentProjects</strong></span>
+        </div>
+    </div>
+</div>
+
+@if (Model.CandidateCvs != null && Model.CandidateCvs.Any())
+{
+    @foreach (var cv in Model.CandidateCvs)
+    {
+        <div class="card mb-4 p-4">
+            <div class="d-flex justify-content-between align-items-start mb-3 pb-3 border-bottom">
+                <div class="d-flex align-items-center gap-3">
+                    @if (!string.IsNullOrEmpty(cv.CandidateProfileImage))
+                    {
+                        <img src="@cv.CandidateProfileImage" alt="Profile Photo" class="avatar-sm" />
+                    }
+                    else
+                    {
+                        <div class="avatar-sm bg-light d-flex align-items-center justify-content-center fw-bold">
+                            @(string.IsNullOrEmpty(cv.CandidateName) ? "C" : cv.CandidateName.Substring(0, 1).ToUpper())
+                        </div>
+                    }
+                    <div>
+                        <h2 class="h5 fw-bold mb-0">@cv.CandidateName</h2>
+                        <div class="small text-muted">
+                            @cv.CandidateEmail @(!string.IsNullOrEmpty(cv.CandidatePhone) ? $" &bull; {cv.CandidatePhone}" : "")
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <span class="badge @(cv.Status == TalentManagement.Models.Enums.CvStatus.Published ? "bg-dark" : "bg-secondary") fs-6 mb-1">
+                        @cv.Status
+                    </span>
+                    <div class="small text-muted">Submitted @cv.CreatedAt.ToString("yyyy-MM-dd")</div>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(cv.CandidateBio))
+            {
+                <div class="mb-3 p-2 bg-light rounded small">
+                    <strong>Bio:</strong> @cv.CandidateBio
+                </div>
+            }
+
+            <div class="row g-4 mb-3">
+                <div class="col-lg-6">
+                    <h3 class="h6 fw-bold mb-2">Dynamic Attribute Qualifications</h3>
+                    <div class="table-responsive border rounded">
+                        <table class="table table-sm table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Attribute</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var attr in cv.Attributes)
+                                {
+                                    <tr>
+                                        <td class="fw-semibold">
+                                            @attr.AttributeName
+                                            @if (attr.IsRequired)
+                                            {
+                                                <span class="text-muted small">*</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (string.IsNullOrWhiteSpace(attr.Value))
+                                            {
+                                                <span class="text-muted fst-italic">Empty / Not provided</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="fw-semibold">@attr.FormattedValue</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <h3 class="h6 fw-bold mb-2">Matching Portfolio Projects (Max @Model.MaxRecentProjects)</h3>
+                    @if (cv.MatchingProjects != null && cv.MatchingProjects.Any())
+                    {
+                        <div class="list-group">
+                            @foreach (var proj in cv.MatchingProjects)
+                            {
+                                <div class="list-group-item p-2">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-semibold">@proj.Title</span>
+                                        @if (proj.IsMatchingFilter)
+                                        {
+                                            <span class="badge bg-dark">Matches Filter</span>
+                                        }
+                                    </div>
+                                    <p class="small text-muted mb-1">@proj.Description</p>
+                                    <div class="d-flex flex-wrap gap-1">
+                                        @foreach (var tag in proj.Tags)
+                                        {
+                                            <span class="badge @(Model.FilterTags != null && Model.FilterTags.Contains(tag, StringComparer.OrdinalIgnoreCase) ? "bg-dark" : "bg-secondary")">
+                                                @tag
+                                            </span>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="p-3 bg-light rounded text-center small text-muted">
+                            Candidate has not registered any matching portfolio projects.
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="pt-2 border-top text-end">
+                <a asp-controller="Cv" asp-action="Details" asp-route-id="@cv.CvId" class="btn btn-sm btn-outline-dark">
+                    Open Full CV View &rarr;
+                </a>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card p-5 text-center text-muted">
+        <h2 class="h5 fw-semibold mb-2">No Applications Yet</h2>
+        <p class="mb-0">Candidates have not submitted any CVs for this position yet.</p>
+    </div>
+}

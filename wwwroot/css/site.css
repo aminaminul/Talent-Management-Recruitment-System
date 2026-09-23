@@ -1,0 +1,346 @@
+/* ==========================================================================
+   TALENT MANAGEMENT SYSTEM - STRICT MONOCHROME DESIGN SYSTEM
+   Palette: Black (#111111, #000000), White (#ffffff), Grayscale (#f8f9fa - #333333)
+   ========================================================================== */
+
+:root {
+  --color-black: #111111;
+  --color-black-deep: #000000;
+  --color-gray-900: #1a1a1a;
+  --color-gray-800: #2b2b2b;
+  --color-gray-700: #4a4a4a;
+  --color-gray-600: #666666;
+  --color-gray-500: #888888;
+  --color-gray-400: #aaaaaa;
+  --color-gray-300: #cccccc;
+  --color-gray-200: #e5e5e5;
+  --color-gray-100: #f4f4f4;
+  --color-gray-50: #fafafa;
+  --color-white: #ffffff;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  font-family: var(--font-family);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-black);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: var(--color-black);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.15s ease;
+}
+
+a:hover {
+  color: var(--color-gray-700);
+  opacity: 0.85;
+}
+
+/* Navigation Bar */
+.navbar-monochrome {
+  background-color: var(--color-white);
+  border-bottom: 2px solid var(--color-black);
+  padding: 0.85rem 1rem;
+}
+
+.navbar-brand {
+  color: var(--color-black) !important;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-size: 1.25rem;
+  text-decoration: none !important;
+}
+
+.navbar-brand:hover {
+  opacity: 0.85;
+}
+
+.nav-link {
+  color: var(--color-black) !important;
+  font-weight: 500;
+  text-decoration: none !important;
+  padding: 0.5rem 0.85rem !important;
+  border-radius: 4px;
+}
+
+.nav-link:hover, .nav-link:focus {
+  background-color: var(--color-gray-100);
+  color: var(--color-black) !important;
+}
+
+.nav-link.active {
+  background-color: var(--color-black);
+  color: var(--color-white) !important;
+}
+
+/* Buttons */
+.btn {
+  font-weight: 500;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  transition: all 0.15s ease-in-out;
+  text-decoration: none !important;
+}
+
+.btn-dark, .btn-primary {
+  background-color: var(--color-black) !important;
+  border-color: var(--color-black) !important;
+  color: var(--color-white) !important;
+}
+
+.btn-dark:hover, .btn-primary:hover {
+  background-color: var(--color-gray-800) !important;
+  border-color: var(--color-gray-800) !important;
+  color: var(--color-white) !important;
+}
+
+.btn-outline-dark, .btn-outline-secondary, .btn-outline-primary {
+  background-color: transparent !important;
+  border: 1px solid var(--color-black) !important;
+  color: var(--color-black) !important;
+}
+
+.btn-outline-dark:hover, .btn-outline-secondary:hover, .btn-outline-primary:hover {
+  background-color: var(--color-black) !important;
+  color: var(--color-white) !important;
+}
+
+.btn-secondary, .btn-light {
+  background-color: var(--color-gray-100) !important;
+  border-color: var(--color-gray-300) !important;
+  color: var(--color-black) !important;
+}
+
+.btn-secondary:hover, .btn-light:hover {
+  background-color: var(--color-gray-200) !important;
+  border-color: var(--color-gray-400) !important;
+  color: var(--color-black) !important;
+}
+
+.btn-danger, .btn-outline-danger {
+  background-color: var(--color-white) !important;
+  border: 1px solid var(--color-black) !important;
+  color: var(--color-black) !important;
+}
+
+.btn-danger:hover, .btn-outline-danger:hover {
+  background-color: var(--color-black) !important;
+  color: var(--color-white) !important;
+}
+
+/* Cards */
+.card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 6px;
+  box-shadow: none;
+  transition: border-color 0.15s ease;
+}
+
+.card:hover {
+  border-color: var(--color-black);
+}
+
+.card-header {
+  background-color: var(--color-gray-50);
+  border-bottom: 1px solid var(--color-gray-300);
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+}
+
+.card-footer {
+  background-color: var(--color-gray-50);
+  border-top: 1px solid var(--color-gray-300);
+  padding: 0.75rem 1.25rem;
+}
+
+/* Tables */
+.table {
+  color: var(--color-black);
+  border-color: var(--color-gray-300);
+}
+
+.table th {
+  background-color: var(--color-gray-100);
+  color: var(--color-black);
+  font-weight: 600;
+  border-bottom: 2px solid var(--color-black);
+  padding: 0.75rem 1rem;
+}
+
+.table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-gray-200);
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: var(--color-gray-50);
+}
+
+/* Forms */
+.form-label {
+  font-weight: 600;
+  color: var(--color-black);
+  margin-bottom: 0.35rem;
+}
+
+.form-control, .form-select {
+  border: 1px solid var(--color-gray-400);
+  border-radius: 4px;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  padding: 0.55rem 0.75rem;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--color-black);
+  box-shadow: 0 0 0 1px var(--color-black);
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+.form-check-input {
+  border-color: var(--color-gray-500);
+  border-radius: 3px;
+  width: 1.15em;
+  height: 1.15em;
+}
+
+.form-check-input:checked {
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+}
+
+.form-check-input:focus {
+  border-color: var(--color-black);
+  box-shadow: 0 0 0 1px var(--color-black);
+}
+
+/* Monochrome Alerts */
+.alert {
+  border-radius: 4px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--color-black);
+}
+
+.alert-success, .alert-info, .alert-secondary {
+  background-color: var(--color-gray-100);
+  border-color: var(--color-gray-400);
+  color: var(--color-black);
+}
+
+.alert-danger, .alert-warning {
+  background-color: var(--color-gray-100);
+  border: 2px solid var(--color-black);
+  color: var(--color-black);
+}
+
+/* Badges */
+.badge {
+  font-weight: 600;
+  padding: 0.35em 0.65em;
+  border-radius: 3px;
+  letter-spacing: 0.02em;
+}
+
+.bg-dark, .badge-dark, .bg-primary, .bg-success {
+  background-color: var(--color-black) !important;
+  color: var(--color-white) !important;
+}
+
+.bg-secondary, .badge-light, .bg-info, .bg-warning {
+  background-color: var(--color-gray-200) !important;
+  color: var(--color-black) !important;
+  border: 1px solid var(--color-gray-400);
+}
+
+.badge-outline {
+  background-color: transparent !important;
+  border: 1px solid var(--color-black) !important;
+  color: var(--color-black) !important;
+}
+
+/* Stats Metric Cards */
+.stat-box {
+  background-color: var(--color-gray-50);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 6px;
+  padding: 1.25rem;
+}
+
+.stat-value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-black);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-gray-600);
+  margin-top: 0.35rem;
+}
+
+/* Pagination */
+.pagination .page-item .page-link {
+  color: var(--color-black);
+  border-color: var(--color-gray-300);
+  background-color: var(--color-white);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+  color: var(--color-white);
+}
+
+.pagination .page-item.disabled .page-link {
+  color: var(--color-gray-400);
+  background-color: var(--color-gray-50);
+}
+
+/* Profile Photo */
+.avatar-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--color-black);
+}
+
+.avatar-sm {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid var(--color-black);
+}
+
+/* Footer */
+footer {
+  background-color: var(--color-gray-50);
+  border-top: 1px solid var(--color-gray-200);
+  color: var(--color-gray-600);
+  font-size: 0.875rem;
+}

@@ -1,0 +1,55 @@
+@model TalentManagement.ViewModels.CandidateProfileViewModel
+@{
+    ViewData["Title"] = "Candidate Profile";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+                <div class="d-flex align-items-center gap-3">
+                    @if (!string.IsNullOrEmpty(Model.ProfileImageUrl))
+                    {
+                        <img src="@Model.ProfileImageUrl" alt="Profile" class="avatar-img" />
+                    }
+                    else
+                    {
+                        <div class="avatar-img bg-light d-flex align-items-center justify-content-center fw-bold fs-4">
+                            @(string.IsNullOrEmpty(Model.FullName) ? "U" : Model.FullName.Substring(0, 1).ToUpper())
+                        </div>
+                    }
+                    <div>
+                        <h1 class="h3 fw-bold mb-1">@Model.FullName</h1>
+                        <div class="text-muted">@Model.Email</div>
+                    </div>
+                </div>
+                <div>
+                    <a asp-action="EditProfile" class="btn btn-dark btn-sm">Edit Profile</a>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-sm-6">
+                    <label class="form-label text-muted small mb-0">PHONE NUMBER</label>
+                    <div class="fw-semibold">@(string.IsNullOrEmpty(Model.PhoneNumber) ? "Not provided" : Model.PhoneNumber)</div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label text-muted small mb-0">EMAIL ADDRESS</label>
+                    <div class="fw-semibold">@Model.Email</div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label text-muted small mb-0">PROFESSIONAL BIOGRAPHY</label>
+                <div class="p-3 bg-light rounded mt-1">
+                    @(string.IsNullOrEmpty(Model.Bio) ? "No biography provided yet. Click 'Edit Profile' to add your summary." : Model.Bio)
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <a asp-controller="Project" asp-action="Index" class="btn btn-outline-dark btn-sm">Manage Projects &rarr;</a>
+                <a asp-controller="Cv" asp-action="MyCvs" class="btn btn-outline-dark btn-sm">My Applications &rarr;</a>
+            </div>
+        </div>
+    </div>
+</div>

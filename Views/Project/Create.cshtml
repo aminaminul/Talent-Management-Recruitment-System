@@ -1,0 +1,61 @@
+@model TalentManagement.ViewModels.ProjectViewModel
+@{
+    ViewData["Title"] = "Add Project";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                <h1 class="h4 fw-bold mb-0">Add Portfolio Project</h1>
+                <a asp-action="Index" class="btn btn-outline-dark btn-sm">Cancel</a>
+            </div>
+
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3 fw-semibold"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input asp-for="Title" class="form-control" placeholder="e.g. Sales Prediction System" autofocus />
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Describe the goal, your role, and key deliverables..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="StartDate" class="form-label"></label>
+                        <input asp-for="StartDate" class="form-control" type="date" />
+                        <span asp-validation-for="StartDate" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="EndDate" class="form-label"></label>
+                        <input asp-for="EndDate" class="form-control" type="date" />
+                        <span asp-validation-for="EndDate" class="text-danger small"></span>
+                        <div class="form-text text-muted">Leave empty if this is an ongoing project.</div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="TagsRaw" class="form-label"></label>
+                    <input asp-for="TagsRaw" class="form-control" placeholder="e.g. Python, SQL, Machine Learning, Docker" />
+                    <span asp-validation-for="TagsRaw" class="text-danger small"></span>
+                    <div class="form-text text-muted">Comma-separated skill and technology tags. Reusable across the platform.</div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-dark">Add Project</button>
+                    <a asp-action="Index" class="btn btn-outline-dark">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

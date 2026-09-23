@@ -1,0 +1,147 @@
+@using TalentManagement.Data
+@model TalentManagement.ViewModels.CvDetailsViewModel
+@{
+    ViewData["Title"] = "CV - " + Model.CandidateName + " (" + Model.PositionTitle + ")";
+    var isRecruiter = User.IsInRole(DbInitializer.RecruiterRole);
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="card p-4 mb-4">
+            <div class="d-flex justify-content-between align-items-start mb-4 pb-3 border-bottom">
+                <div class="d-flex align-items-center gap-3">
+                    @if (!string.IsNullOrEmpty(Model.CandidateProfileImage))
+                    {
+                        <img src="@Model.CandidateProfileImage" alt="Profile" class="avatar-img" />
+                    }
+                    else
+                    {
+                        <div class="avatar-img bg-light d-flex align-items-center justify-content-center fw-bold fs-4">
+                            @(string.IsNullOrEmpty(Model.CandidateName) ? "C" : Model.CandidateName.Substring(0, 1).ToUpper())
+                        </div>
+                    }
+                    <div>
+                        <h1 class="h3 fw-bold mb-1">@Model.CandidateName</h1>
+                        <div class="text-muted">
+                            @Model.CandidateEmail @(!string.IsNullOrEmpty(Model.CandidatePhone) ? $" &bull; {Model.CandidatePhone}" : "")
+                        </div>
+                        <div class="small text-muted mt-1">
+                            Application for: <strong class="text-dark">@Model.PositionTitle</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <span class="badge @(Model.Status == TalentManagement.Models.Enums.CvStatus.Published ? "bg-dark" : "bg-secondary") fs-6 mb-1">
+                        @Model.Status
+                    </span>
+                    <div class="small text-muted">Submitted @Model.CreatedAt.ToString("yyyy-MM-dd")</div>
+                    @if (Model.UpdatedAt.HasValue)
+                    {
+                        <div class="small text-muted">Updated @Model.UpdatedAt.Value.ToString("yyyy-MM-dd")</div>
+                    }
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.CandidateBio))
+            {
+                <div class="mb-4">
+                    <h2 class="h6 fw-bold mb-1">PROFESSIONAL SUMMARY</h2>
+                    <div class="p-3 bg-light rounded small">@Model.CandidateBio</div>
+                </div>
+            }
+
+            <div class="mb-4">
+                <h2 class="h5 fw-bold mb-2">Dynamic Technical &amp; Role Qualifications</h2>
+                <div class="table-responsive border rounded">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Attribute</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Candidate Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var attr in Model.Attributes)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">
+                                        @attr.AttributeName
+                                        @if (attr.IsRequired)
+                                        {
+                                            <span class="text-muted small">*</span>
+                                        }
+                                    </td>
+                                    <td class="small text-muted">@attr.CategoryName</td>
+                                    <td><span class="badge bg-secondary">@attr.AttributeType</span></td>
+                                    <td>
+                                        @if (string.IsNullOrWhiteSpace(attr.Value))
+                                        {
+                                            <span class="text-muted fst-italic">Empty / Not provided</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="fw-semibold">@attr.FormattedValue</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h2 class="h5 fw-bold mb-2">Matching Portfolio Projects (Capped at @Model.MaxRecentProjects)</h2>
+                @if (Model.MatchingProjects != null && Model.MatchingProjects.Any())
+                {
+                    <div class="list-group">
+                        @foreach (var proj in Model.MatchingProjects)
+                        {
+                            <div class="list-group-item p-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <h3 class="h6 fw-bold mb-0">@proj.Title</h3>
+                                    <span class="small text-muted">
+                                        @proj.StartDate.ToString("yyyy-MM") &ndash; @(proj.EndDate?.ToString("yyyy-MM") ?? "Present")
+                                    </span>
+                                </div>
+                                <p class="small text-muted mb-2">@proj.Description</p>
+                                <div class="d-flex flex-wrap gap-1">
+                                    @foreach (var tag in proj.Tags)
+                                    {
+                                        <span class="badge @(proj.IsMatchingFilter ? "bg-dark" : "bg-secondary")">@tag</span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="p-3 bg-light rounded text-center small text-muted">
+                        No matching portfolio projects found.
+                    </div>
+                }
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                @if (isRecruiter)
+                {
+                    <a asp-controller="Position" asp-action="Candidates" asp-route-id="@Model.PositionId" class="btn btn-outline-dark btn-sm">
+                        &larr; Back to Candidates List
+                    </a>
+                }
+                else
+                {
+                    <a asp-action="MyCvs" class="btn btn-outline-dark btn-sm">
+                        &larr; Back to My Applications
+                    </a>
+                    <a asp-action="Edit" asp-route-id="@Model.CvId" class="btn btn-dark btn-sm">
+                        Edit CV
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

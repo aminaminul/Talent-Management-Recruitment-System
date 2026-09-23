@@ -1,0 +1,85 @@
+@model TalentManagement.ViewModels.AttributeDetailsViewModel
+@{
+    ViewData["Title"] = "Attribute Details - " + Model.Name;
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+                <div>
+                    <h1 class="h3 fw-bold mb-1">@Model.Name</h1>
+                    <div class="d-flex gap-2 align-items-center">
+                        <span class="badge bg-dark">@Model.AttributeType</span>
+                        <span class="badge bg-secondary">@Model.CategoryName</span>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-dark btn-sm">Edit Attribute</a>
+                    <a asp-action="Index" class="btn btn-outline-dark btn-sm">&larr; Back to List</a>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-sm-6">
+                    <div class="p-3 bg-light rounded border">
+                        <div class="text-muted small text-uppercase">Assigned to Positions</div>
+                        <div class="h4 fw-bold mb-0">@Model.PositionUsageCount</div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="p-3 bg-light rounded border">
+                        <div class="text-muted small text-uppercase">Recorded in Candidate CVs</div>
+                        <div class="h4 fw-bold mb-0">@Model.CvUsageCount</div>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.AttributeType == TalentManagement.Models.Enums.AttributeType.Dropdown)
+            {
+                <div class="mb-4">
+                    <h2 class="h5 fw-bold mb-2">Configured Options</h2>
+                    @if (Model.Options != null && Model.Options.Any())
+                    {
+                        <ul class="list-group">
+                            @foreach (var opt in Model.Options)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>@opt.Value</span>
+                                    <span class="badge bg-secondary">Order: @opt.DisplayOrder</span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="text-muted">No options configured.</div>
+                    }
+                </div>
+            }
+
+            <div class="small text-muted mb-4">
+                <div>Created: @Model.CreatedAt.ToString("yyyy-MM-dd HH:mm") UTC</div>
+                @if (Model.UpdatedAt.HasValue)
+                {
+                    <div>Last Updated: @Model.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm") UTC</div>
+                }
+            </div>
+
+            <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+                @if (Model.CanDelete)
+                {
+                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-sm">
+                        Delete Attribute
+                    </a>
+                }
+                else
+                {
+                    <div class="small text-muted">
+                        <em>[NOTICE] This attribute cannot be deleted because it is currently in use by active positions or candidate CVs.</em>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
