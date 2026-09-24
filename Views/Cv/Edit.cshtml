@@ -19,7 +19,7 @@
                 <div>
                     <h1 class="h4 fw-bold mb-1">@(Model.CvId.HasValue ? "Edit Application CV" : "Create Application CV")</h1>
                     <div class="text-muted small">
-                        Position: <strong>@Model.PositionTitle</strong> &bull; Status:
+                        Position: <strong>@Model.PositionTitle</strong> | Status:
                         <span class="badge @(Model.Status == TalentManagement.Models.Enums.CvStatus.Published ? "bg-dark" : "bg-secondary")">
                             @Model.Status
                         </span>
@@ -43,9 +43,9 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3 fw-semibold"></div>
 
                 <div class="mb-4">
-                    <h2 class="h5 fw-bold mb-1">Position Dynamic Attributes</h2>
+                    <h2 class="h5 fw-bold mb-1">Role Qualifications &amp; Questions</h2>
                     <p class="text-muted small mb-3">
-                        Fields marked with an asterisk (<span class="text-danger fw-bold">*</span>) are required by the recruiter before you can publish your CV. You can save your progress as a draft at any time.
+                        Please provide details for the qualifications requested by the recruiter. Fields marked with an asterisk (<span class="text-danger fw-bold">*</span>) are mandatory before publishing. You can save as a draft at any time.
                     </p>
 
                     @if (Model.Attributes != null && Model.Attributes.Any())
@@ -118,7 +118,7 @@
                                 @if (attr.HasValidationError)
                                 {
                                     <div class="text-danger small mt-1 fw-semibold">
-                                        &bull; @attr.ValidationErrorMessage
+                                        @attr.ValidationErrorMessage
                                     </div>
                                 }
                             </div>
@@ -139,7 +139,7 @@
                             Save as Draft
                         </button>
                         <button type="submit" name="submitType" value="publish" class="btn btn-dark">
-                            Publish CV &rarr;
+                            Publish CV
                         </button>
                     </div>
                 </div>

@@ -48,8 +48,8 @@
                 </div>
 
                 <div class="mb-4">
-                    <h2 class="h5 fw-bold mb-2">Assign Dynamic Position Attributes</h2>
-                    <p class="text-muted small">Select which attributes apply to this job opening and specify if completion is required before publishing.</p>
+                    <h2 class="h5 fw-bold mb-2">Required Skills &amp; Qualifications</h2>
+                    <p class="text-muted small">Select which qualifications and skills candidates must answer when applying to this position.</p>
 
                     @if (Model.AvailableAttributes != null && Model.AvailableAttributes.Any())
                     {
@@ -58,10 +58,10 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 50px;">Include</th>
-                                        <th>Attribute</th>
-                                        <th>Type</th>
+                                        <th>Skill / Qualification</th>
+                                        <th>Answer Format</th>
                                         <th>Category</th>
-                                        <th style="width: 120px;">Required</th>
+                                        <th style="width: 120px;">Mandatory</th>
                                         <th style="width: 120px;">Display Order</th>
                                     </tr>
                                 </thead>
@@ -97,7 +97,7 @@
                     else
                     {
                         <div class="alert alert-secondary mb-0">
-                            No attributes have been defined yet. <a asp-controller="Attribute" asp-action="Create">Create attributes first &rarr;</a>
+                            No skills or qualifications have been defined yet. <a asp-controller="Attribute" asp-action="Create">Add qualifications first</a>
                         </div>
                     }
                 </div>

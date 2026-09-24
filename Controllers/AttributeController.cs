@@ -79,7 +79,7 @@ public class AttributeController : Controller
         try
         {
             var created = await _attributeService.CreateAttributeAsync(model);
-            TempData["SuccessMessage"] = $"Attribute '{created.Name}' created successfully.";
+            TempData["SuccessMessage"] = $"Skill / Qualification '{created.Name}' created successfully.";
             return RedirectToAction(nameof(Index));
         }
         catch (Exception ex)
@@ -134,7 +134,7 @@ public class AttributeController : Controller
         try
         {
             await _attributeService.UpdateAttributeAsync(model);
-            TempData["SuccessMessage"] = $"Attribute '{model.Name}' updated successfully.";
+            TempData["SuccessMessage"] = $"Skill / Qualification '{model.Name}' updated successfully.";
             return RedirectToAction(nameof(Index));
         }
         catch (DbUpdateConcurrencyException)
@@ -199,7 +199,7 @@ public class AttributeController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error deleting attribute {Id}.", id);
-            TempData["ErrorMessage"] = "An error occurred while deleting the attribute. Please try again.";
+            TempData["ErrorMessage"] = "An error occurred while deleting the qualification. Please try again.";
             return RedirectToAction(nameof(Details), new { id });
         }
     }

@@ -19,7 +19,7 @@
                 Posted by @Model.RecruiterName on @Model.CreatedAt.ToString("yyyy-MM-dd")
                 @if (Model.UpdatedAt.HasValue)
                 {
-                    <span>&bull; Updated @Model.UpdatedAt.Value.ToString("yyyy-MM-dd")</span>
+                    <span>Updated @Model.UpdatedAt.Value.ToString("yyyy-MM-dd")</span>
                 }
             </div>
         </div>
@@ -109,8 +109,8 @@
     </div>
 
     <div class="mb-4">
-        <h2 class="h5 fw-bold mb-2">Required &amp; Configured Dynamic Attributes</h2>
-        <p class="text-muted small mb-2">When applying, candidates complete these dynamic attributes:</p>
+        <h2 class="h5 fw-bold mb-2">Role Requirements &amp; Qualifications</h2>
+        <p class="text-muted small mb-2">Candidates applying for this role provide details for the following criteria:</p>
 
         @if (Model.Attributes != null && Model.Attributes.Any())
         {
@@ -118,10 +118,10 @@
                 <table class="table table-hover mb-0">
                     <thead>
                         <tr>
-                            <th>Attribute</th>
-                            <th>Type</th>
+                            <th>Skill / Qualification</th>
+                            <th>Answer Format</th>
                             <th>Category</th>
-                            <th>Requirement</th>
+                            <th>Status</th>
                             <th>Display Order</th>
                         </tr>
                     </thead>
@@ -135,7 +135,7 @@
                                 <td>
                                     @if (pa.IsRequired)
                                     {
-                                        <span class="badge bg-dark">REQUIRED</span>
+                                        <span class="badge bg-dark">MANDATORY</span>
                                     }
                                     else
                                     {
@@ -151,11 +151,11 @@
         }
         else
         {
-            <div class="text-muted small">No dynamic attributes assigned to this position.</div>
+            <div class="text-muted small">No specific qualifications assigned to this position.</div>
         }
     </div>
 
     <div class="pt-3 border-top">
-        <a asp-action="Index" class="btn btn-outline-dark btn-sm">&larr; Back to Positions</a>
+        <a asp-action="Index" class="btn btn-outline-dark btn-sm">Back to Positions</a>
     </div>
 </div>

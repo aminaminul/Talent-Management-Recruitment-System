@@ -46,6 +46,7 @@ public class ProjectService : IProjectService
             Id = project.Id,
             Title = project.Title,
             Description = project.Description,
+            ProjectUrl = project.ProjectUrl,
             StartDate = project.StartDate,
             EndDate = project.EndDate,
             TagsRaw = tagsString,
@@ -60,6 +61,7 @@ public class ProjectService : IProjectService
             CandidateProfileId = candidateProfileId,
             Title = model.Title.Trim(),
             Description = model.Description.Trim(),
+            ProjectUrl = string.IsNullOrWhiteSpace(model.ProjectUrl) ? null : model.ProjectUrl.Trim(),
             StartDate = model.StartDate,
             EndDate = model.EndDate,
             CreatedAt = DateTime.UtcNow
@@ -91,6 +93,7 @@ public class ProjectService : IProjectService
 
         project.Title = model.Title.Trim();
         project.Description = model.Description.Trim();
+        project.ProjectUrl = string.IsNullOrWhiteSpace(model.ProjectUrl) ? null : model.ProjectUrl.Trim();
         project.StartDate = model.StartDate;
         project.EndDate = model.EndDate;
         project.UpdatedAt = DateTime.UtcNow;

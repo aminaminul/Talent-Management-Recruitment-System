@@ -44,6 +44,13 @@
                     </div>
                 </div>
 
+                <div class="mb-3">
+                    <label asp-for="ProjectUrl" class="form-label fw-semibold">Project URL (optional)</label>
+                    <input asp-for="ProjectUrl" class="form-control" type="url" />
+                    <span asp-validation-for="ProjectUrl" class="text-danger small"></span>
+                    <div class="form-text text-muted">Link to live site, demo, or GitHub repository.</div>
+                </div>
+
                 <div class="mb-4">
                     <label asp-for="TagsRaw" class="form-label"></label>
                     <input asp-for="TagsRaw" class="form-control" />

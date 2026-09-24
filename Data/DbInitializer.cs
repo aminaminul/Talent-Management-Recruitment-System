@@ -19,6 +19,15 @@ public static class DbInitializer
 
         await context.Database.MigrateAsync();
 
+        try
+        {
+            await context.Database.ExecuteSqlRawAsync("IF COL_LENGTH('Projects', 'ProjectUrl') IS NULL ALTER TABLE Projects ADD ProjectUrl nvarchar(1000) NULL;");
+        }
+        catch
+        {
+            // Ignore if column already exists or unsupported provider
+        }
+
         if (!await roleManager.RoleExistsAsync(RecruiterRole))
         {
             await roleManager.CreateAsync(new IdentityRole(RecruiterRole));

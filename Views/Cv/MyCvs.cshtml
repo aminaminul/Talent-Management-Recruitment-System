@@ -6,7 +6,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
     <div>
         <h1 class="h3 fw-bold mb-0">My Applications &amp; CVs</h1>
-        <p class="text-muted small mb-0">Track and manage your dynamic CVs for job openings</p>
+        <p class="text-muted small mb-0">Track and manage your job applications and qualifications</p>
     </div>
     <div>
         <a asp-controller="Position" asp-action="Index" class="btn btn-dark btn-sm">+ Apply to Open Positions</a>
@@ -42,7 +42,7 @@
                                 </span>
                             </td>
                             <td class="small text-muted">@cv.CreatedAt.ToString("yyyy-MM-dd")</td>
-                            <td class="small text-muted">@(cv.UpdatedAt?.ToString("yyyy-MM-dd") ?? "&mdash;")</td>
+                            <td class="small text-muted">@(cv.UpdatedAt?.ToString("yyyy-MM-dd") ?? "N/A")</td>
                             <td class="text-end">
                                 <a asp-action="Details" asp-route-id="@cv.Id" class="btn btn-sm btn-outline-dark me-1">
                                     View
@@ -65,7 +65,7 @@
     {
         <div class="p-5 text-center text-muted">
             <h2 class="h5 fw-semibold mb-2">No Applications Created Yet</h2>
-            <p class="mb-3">Browse available positions and create your customized dynamic CV.</p>
+            <p class="mb-3">Browse available openings and submit your tailored CV application.</p>
             <a asp-controller="Position" asp-action="Index" class="btn btn-dark">Browse Available Positions</a>
         </div>
     }

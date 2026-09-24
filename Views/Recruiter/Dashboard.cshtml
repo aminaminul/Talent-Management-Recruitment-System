@@ -6,11 +6,11 @@
 <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
     <div>
         <h1 class="h3 fw-bold mb-0">Recruiter Dashboard</h1>
-        <p class="text-muted small mb-0">Talent pipeline management and attribute configurations</p>
+        <p class="text-muted small mb-0">Talent pipeline management, job openings, and candidate qualifications</p>
     </div>
     <div class="d-flex gap-2">
-        <a asp-controller="Position" asp-action="Create" class="btn btn-dark btn-sm">+ New Position</a>
-        <a asp-controller="Attribute" asp-action="Create" class="btn btn-outline-dark btn-sm">+ New Attribute</a>
+        <a asp-controller="Position" asp-action="Create" class="btn btn-dark btn-sm">New Position</a>
+        <a asp-controller="Attribute" asp-action="Create" class="btn btn-outline-dark btn-sm">New Qualification</a>
     </div>
 </div>
 
@@ -36,7 +36,7 @@
     <div class="col-sm-6 col-lg-3">
         <div class="stat-box">
             <div class="stat-value">@Model.TotalAttributes</div>
-            <div class="stat-label">Dynamic Attributes</div>
+            <div class="stat-label">Skills &amp; Qualifications</div>
         </div>
     </div>
 </div>
@@ -46,7 +46,7 @@
         <div class="card h-100">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span class="fw-bold">Active Positions</span>
-                <a asp-controller="Position" asp-action="Index" class="small">View All &rarr;</a>
+                <a asp-controller="Position" asp-action="Index" class="small">View All</a>
             </div>
             <div class="card-body p-0">
                 @if (Model.RecentPositions != null && Model.RecentPositions.Any())

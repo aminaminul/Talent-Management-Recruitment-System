@@ -16,13 +16,13 @@ public class AttributeListViewModel
 
 public class AttributeCreateViewModel
 {
-    [Required(ErrorMessage = "Attribute name is required.")]
+    [Required(ErrorMessage = "Skill or qualification name is required.")]
     [StringLength(100, ErrorMessage = "Name cannot exceed 100 characters.")]
-    [Display(Name = "Attribute Name")]
+    [Display(Name = "Skill / Qualification Name")]
     public string Name { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Please select an attribute type.")]
-    [Display(Name = "Attribute Type")]
+    [Required(ErrorMessage = "Please select an answer format.")]
+    [Display(Name = "Answer Format")]
     public AttributeType AttributeType { get; set; } = AttributeType.String;
 
     [Required(ErrorMessage = "Please select a category.")]
@@ -31,7 +31,7 @@ public class AttributeCreateViewModel
 
     public List<SelectListItem> CategoryOptions { get; set; } = new();
 
-    [Display(Name = "Options (for Dropdown type, one per line)")]
+    [Display(Name = "Available Choices (one per line)")]
     public string? OptionsRaw { get; set; }
 }
 
@@ -39,12 +39,12 @@ public class AttributeEditViewModel : IConcurrencyEntity
 {
     public int Id { get; set; }
 
-    [Required(ErrorMessage = "Attribute name is required.")]
+    [Required(ErrorMessage = "Skill or qualification name is required.")]
     [StringLength(100, ErrorMessage = "Name cannot exceed 100 characters.")]
-    [Display(Name = "Attribute Name")]
+    [Display(Name = "Skill / Qualification Name")]
     public string Name { get; set; } = string.Empty;
 
-    [Display(Name = "Attribute Type")]
+    [Display(Name = "Answer Format")]
     public AttributeType AttributeType { get; set; }
 
     [Required(ErrorMessage = "Please select a category.")]
@@ -53,7 +53,7 @@ public class AttributeEditViewModel : IConcurrencyEntity
 
     public List<SelectListItem> CategoryOptions { get; set; } = new();
 
-    [Display(Name = "Options (for Dropdown type, one per line)")]
+    [Display(Name = "Available Choices (one per line)")]
     public string? OptionsRaw { get; set; }
 
     public byte[]? RowVersion { get; set; }

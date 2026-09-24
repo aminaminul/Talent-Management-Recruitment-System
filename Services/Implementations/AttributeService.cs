@@ -168,7 +168,7 @@ public class AttributeService : IAttributeService
 
         if (attribute == null)
         {
-            return (false, "The attribute could not be found.");
+            return (false, "The qualification could not be found.");
         }
 
         if (rowVersion != null)
@@ -179,19 +179,19 @@ public class AttributeService : IAttributeService
         var isUsedInPosition = await _context.PositionAttributes.AnyAsync(pa => pa.AttributeDefinitionId == id);
         if (isUsedInPosition)
         {
-            return (false, "Cannot delete this attribute because it is assigned to one or more job positions.");
+            return (false, "Cannot delete this qualification because it is currently assigned to one or more job openings.");
         }
 
         var isUsedInCv = await _context.CVAttributeValues.AnyAsync(cav => cav.AttributeDefinitionId == id);
         if (isUsedInCv)
         {
-            return (false, "Cannot delete this attribute because candidate CVs currently reference it.");
+            return (false, "Cannot delete this qualification because candidate applications currently reference it.");
         }
 
         _context.AttributeDefinitions.Remove(attribute);
         await _context.SaveChangesAsync();
 
-        return (true, "Attribute was deleted successfully.");
+        return (true, "Qualification was deleted successfully.");
     }
 
     public async Task<List<SelectListItem>> GetCategorySelectListAsync()

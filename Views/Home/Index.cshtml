@@ -7,7 +7,7 @@
     <div class="container-fluid py-3">
         <h1 class="display-5 fw-bold mb-3">Talent Management &amp; Recruitment System</h1>
         <p class="col-md-9 fs-5 text-muted mb-4">
-            A minimalist, high-performance platform for managing candidate portfolios, job positions, and dynamic technical qualifications without schema bloat.
+            A modern recruitment platform connecting talented candidates with top job opportunities, showcasing project portfolios, and matching verified skills with role requirements.
         </p>
         <div class="d-flex gap-2">
             <a asp-controller="Position" asp-action="Index" class="btn btn-dark btn-lg px-4">Browse Open Positions</a>
@@ -45,7 +45,7 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="h4 fw-bold mb-0">Latest Opportunities</h2>
-    <a asp-controller="Position" asp-action="Index" class="small fw-semibold">View all positions &rarr;</a>
+    <a asp-controller="Position" asp-action="Index" class="small fw-semibold">View all positions</a>
 </div>
 
 @if (Model != null && Model.Any())
@@ -76,7 +76,7 @@
                     <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
                         <span class="small text-muted">@pos.CreatedAt.ToString("yyyy-MM-dd")</span>
                         <a asp-controller="Position" asp-action="Details" asp-route-id="@pos.Id" class="btn btn-sm btn-outline-dark">
-                            Details &rarr;
+                            Details
                         </a>
                     </div>
                 </div>

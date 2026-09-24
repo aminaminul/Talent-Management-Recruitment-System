@@ -25,6 +25,11 @@ public class ProjectViewModel : IConcurrencyEntity
     [Display(Name = "End Date (optional)")]
     public DateTime? EndDate { get; set; }
 
+    [Url(ErrorMessage = "Please enter a valid URL (e.g. https://github.com/project).")]
+    [StringLength(1000, ErrorMessage = "URL cannot exceed 1000 characters.")]
+    [Display(Name = "Project URL (optional)")]
+    public string? ProjectUrl { get; set; }
+
     [Display(Name = "Technologies / Tags (comma-separated, e.g. SQL, Python, Docker)")]
     public string? TagsRaw { get; set; }
 
@@ -36,6 +41,7 @@ public class ProjectDisplayViewModel
     public int Id { get; set; }
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
+    public string? ProjectUrl { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime? EndDate { get; set; }
     public List<string> Tags { get; set; } = new();

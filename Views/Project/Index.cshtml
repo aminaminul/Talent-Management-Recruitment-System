@@ -9,7 +9,7 @@
         <p class="text-muted small mb-0">Projects showcase your skills and match with job position project filters</p>
     </div>
     <div>
-        <a asp-action="Create" class="btn btn-dark btn-sm">+ Add Project</a>
+        <a asp-action="Create" class="btn btn-dark btn-sm">Add Project</a>
     </div>
 </div>
 
@@ -23,11 +23,20 @@
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <h2 class="h5 fw-bold mb-0">@proj.Title</h2>
                         <span class="small text-muted">
-                            @proj.StartDate.ToString("yyyy-MM") &ndash; @(proj.EndDate?.ToString("yyyy-MM") ?? "Present")
+                            @proj.StartDate.ToString("yyyy-MM") to @(proj.EndDate?.ToString("yyyy-MM") ?? "Present")
                         </span>
                     </div>
 
-                    <p class="text-muted small mb-3 flex-grow-1">@proj.Description</p>
+                    <p class="text-muted small mb-2 flex-grow-1">@proj.Description</p>
+
+                    @if (!string.IsNullOrEmpty(proj.ProjectUrl))
+                    {
+                        <div class="mb-2">
+                            <a href="@proj.ProjectUrl" target="_blank" rel="noopener noreferrer" class="small text-dark text-decoration-none fw-semibold">
+                                View Project Link
+                            </a>
+                        </div>
+                    }
 
                     @if (proj.ProjectTags != null && proj.ProjectTags.Any())
                     {
@@ -57,7 +66,7 @@ else
         <h2 class="h5 fw-semibold mb-2">No Projects Added Yet</h2>
         <p class="mb-3">Add your portfolio projects and tag them with relevant technologies to match job openings.</p>
         <div>
-            <a asp-action="Create" class="btn btn-dark">+ Add Your First Project</a>
+            <a asp-action="Create" class="btn btn-dark">Add Your First Project</a>
         </div>
     </div>
 }

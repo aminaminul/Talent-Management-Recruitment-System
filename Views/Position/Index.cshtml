@@ -46,8 +46,8 @@
                     <tr>
                         <th>Title</th>
                         <th>Status</th>
-                        <th>Project Filters</th>
-                        <th>Attributes</th>
+                        <th>Project Skill Tags</th>
+                        <th>Qualifications</th>
                         <th>Posted Date</th>
                         <th class="text-end">Actions</th>
                     </tr>
@@ -78,11 +78,11 @@
                                 }
                                 else
                                 {
-                                    <span class="text-muted small">&mdash;</span>
+                                    <span class="text-muted small">None</span>
                                 }
                             </td>
                             <td>
-                                <span class="small text-muted">@pos.PositionAttributes.Count attribute(s)</span>
+                                <span class="small text-muted">@pos.PositionAttributes.Count requirement(s)</span>
                             </td>
                             <td class="small text-muted">@pos.CreatedAt.ToString("yyyy-MM-dd")</td>
                             <td class="text-end">

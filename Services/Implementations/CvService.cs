@@ -275,6 +275,7 @@ public class CvService : ICvService
                     Id = pr.Id,
                     Title = pr.Title,
                     Description = pr.Description,
+                    ProjectUrl = pr.ProjectUrl,
                     StartDate = pr.StartDate,
                     EndDate = pr.EndDate,
                     Tags = tags,

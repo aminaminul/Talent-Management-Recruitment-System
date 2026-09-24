@@ -147,6 +147,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         {
             b.Property(p => p.Title).HasMaxLength(200).IsRequired();
             b.Property(p => p.Description).IsRequired();
+            b.Property(p => p.ProjectUrl).HasMaxLength(1000);
             b.Property(p => p.RowVersion).IsRowVersion();
 
             b.HasMany(p => p.ProjectTags)
