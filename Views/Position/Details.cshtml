@@ -119,10 +119,8 @@
                     <thead>
                         <tr>
                             <th>Skill / Qualification</th>
-                            <th>Answer Format</th>
                             <th>Category</th>
                             <th>Status</th>
-                            <th>Display Order</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -130,7 +128,6 @@
                         {
                             <tr>
                                 <td class="fw-semibold">@pa.AttributeDefinition?.Name</td>
-                                <td><span class="badge bg-secondary">@pa.AttributeDefinition?.AttributeType</span></td>
                                 <td class="small text-muted">@pa.AttributeDefinition?.Category?.Name</td>
                                 <td>
                                     @if (pa.IsRequired)
@@ -142,7 +139,6 @@
                                         <span class="text-muted small">Optional</span>
                                     }
                                 </td>
-                                <td class="small">#@pa.DisplayOrder</td>
                             </tr>
                         }
                     </tbody>
