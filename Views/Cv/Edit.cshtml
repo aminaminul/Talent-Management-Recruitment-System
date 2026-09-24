@@ -82,10 +82,45 @@
                                         break;
 
                                     case TalentManagement.Models.Enums.AttributeType.Number:
+                                        var numName = attr.AttributeName ?? "";
+                                        string? numMax = null;
+                                        string numMin = "0";
+                                        string numStep = "any";
+                                        string? numHelper = null;
+
+                                        if (numName.Contains("CGPA", StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            numMax = "4.00";
+                                            numStep = "0.01";
+                                            numHelper = "Scale: 0.00 to 4.00 (Maximum 4.00)";
+                                        }
+                                        else if (numName.Contains("GPA", StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            numMax = "5.00";
+                                            numStep = "0.01";
+                                            numHelper = "Scale: 0.00 to 5.00 (Maximum 5.00)";
+                                        }
+                                        else if (numName.Contains("Age", StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            numMax = "120";
+                                            numStep = "1";
+                                            numHelper = "Cannot be negative";
+                                        }
+                                        else
+                                        {
+                                            numHelper = "Cannot be negative (0 or higher)";
+                                        }
+
                                         <input type="number"
-                                               step="any"
+                                               min="@numMin"
+                                               max="@numMax"
+                                               step="@numStep"
                                                asp-for="Attributes[i].Value"
                                                class="form-control @(attr.HasValidationError ? "border-dark" : "")" />
+                                        if (numHelper != null)
+                                        {
+                                            <div class="form-text text-muted small">@numHelper</div>
+                                        }
                                         break;
 
                                     case TalentManagement.Models.Enums.AttributeType.Boolean:

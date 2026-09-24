@@ -88,10 +88,70 @@ public class CvService : ICvService
             return (false, false, "Position not found.", null);
         }
 
+        var hasValidationErrors = false;
+        string? generalErrorMessage = null;
+
+        // 1. Format and range validation for provided attribute values (applies to both draft and publish)
+        foreach (var input in model.Attributes)
+        {
+            var posAttr = position.PositionAttributes.FirstOrDefault(pa => pa.AttributeDefinitionId == input.AttributeDefinitionId);
+            var attrDef = posAttr?.AttributeDefinition;
+            var attrName = attrDef?.Name ?? input.AttributeName;
+            var val = input.Value?.Trim();
+
+            if (!string.IsNullOrWhiteSpace(val))
+            {
+                if (attrDef?.AttributeType == AttributeType.Number)
+                {
+                    if (!double.TryParse(val, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var num))
+                    {
+                        hasValidationErrors = true;
+                        input.HasValidationError = true;
+                        input.ValidationErrorMessage = $"{attrName} must be a valid number.";
+                        generalErrorMessage ??= $"{attrName} must be a valid number.";
+                    }
+                    else if (num < 0)
+                    {
+                        hasValidationErrors = true;
+                        input.HasValidationError = true;
+                        input.ValidationErrorMessage = $"{attrName} cannot be negative.";
+                        generalErrorMessage ??= $"{attrName} cannot be negative.";
+                    }
+                    else if (attrName.Contains("CGPA", StringComparison.OrdinalIgnoreCase) && num > 4.0)
+                    {
+                        hasValidationErrors = true;
+                        input.HasValidationError = true;
+                        input.ValidationErrorMessage = $"{attrName} cannot exceed 4.00.";
+                        generalErrorMessage ??= $"{attrName} cannot exceed 4.00 (Scale: 0.00 to 4.00).";
+                    }
+                    else if (attrName.Contains("GPA", StringComparison.OrdinalIgnoreCase) && num > 5.0)
+                    {
+                        hasValidationErrors = true;
+                        input.HasValidationError = true;
+                        input.ValidationErrorMessage = $"{attrName} cannot exceed 5.00.";
+                        generalErrorMessage ??= $"{attrName} cannot exceed 5.00 (Scale: 0.00 to 5.00).";
+                    }
+                }
+                else if (attrDef?.AttributeType == AttributeType.Dropdown)
+                {
+                    var allowedOptions = attrDef.Options
+                        .Select(o => o.Value)
+                        .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+                    if (!allowedOptions.Contains(val))
+                    {
+                        hasValidationErrors = true;
+                        input.HasValidationError = true;
+                        input.ValidationErrorMessage = "Please select a valid option.";
+                        generalErrorMessage ??= "Please select a valid option.";
+                    }
+                }
+            }
+        }
+
+        // 2. Completeness validation for publish attempts
         if (model.IsPublishAttempt)
         {
-            var hasMissingFields = false;
-
             foreach (var posAttr in position.PositionAttributes.Where(pa => pa.IsRequired))
             {
                 var input = model.Attributes.FirstOrDefault(a => a.AttributeDefinitionId == posAttr.AttributeDefinitionId);
@@ -99,35 +159,20 @@ public class CvService : ICvService
 
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    hasMissingFields = true;
+                    hasValidationErrors = true;
                     if (input != null)
                     {
                         input.HasValidationError = true;
                         input.ValidationErrorMessage = $"{posAttr.AttributeDefinition?.Name ?? "This field"} is required.";
                     }
-                }
-                else if (posAttr.AttributeDefinition?.AttributeType == AttributeType.Dropdown)
-                {
-                    var allowedOptions = posAttr.AttributeDefinition.Options
-                        .Select(o => o.Value)
-                        .ToHashSet(StringComparer.OrdinalIgnoreCase);
-
-                    if (!allowedOptions.Contains(value))
-                    {
-                        hasMissingFields = true;
-                        if (input != null)
-                        {
-                            input.HasValidationError = true;
-                            input.ValidationErrorMessage = "Please select a valid option.";
-                        }
-                    }
+                    generalErrorMessage ??= "Please fill in all required fields before publishing.";
                 }
             }
+        }
 
-            if (hasMissingFields)
-            {
-                return (false, true, "Please fill in all required fields before publishing.", model.CvId);
-            }
+        if (hasValidationErrors)
+        {
+            return (false, true, generalErrorMessage ?? "Please correct the errors in the form.", model.CvId);
         }
 
         CV cv;
