@@ -16,13 +16,13 @@
 
                 <div class="mb-3">
                     <label asp-for="Title" class="form-label"></label>
-                    <input asp-for="Title" class="form-control" placeholder="e.g. Junior Data Engineer @@ Acme Corp." autofocus />
+                    <input asp-for="Title" class="form-control" autofocus />
                     <span asp-validation-for="Title" class="text-danger small"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Description" class="form-label"></label>
-                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Detail the role requirements, team overview, and daily responsibilities..."></textarea>
+                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
                     <span asp-validation-for="Description" class="text-danger small"></span>
                 </div>
 
@@ -42,7 +42,7 @@
 
                 <div class="mb-4">
                     <label asp-for="TagsRaw" class="form-label"></label>
-                    <input asp-for="TagsRaw" class="form-control" placeholder="e.g. SQL, R, Python, Machine Learning" />
+                    <input asp-for="TagsRaw" class="form-control" />
                     <span asp-validation-for="TagsRaw" class="text-danger small"></span>
                     <div class="form-text text-muted">Comma-separated tags used to filter and prioritize matching candidate projects.</div>
                 </div>

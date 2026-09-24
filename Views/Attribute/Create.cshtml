@@ -16,14 +16,14 @@
 
                 <div class="mb-3">
                     <label asp-for="Name" class="form-label"></label>
-                    <input asp-for="Name" class="form-control" placeholder="e.g. Apache Hadoop, GPA, Dancing Skills..." autofocus />
+                    <input asp-for="Name" class="form-control" autofocus />
                     <span asp-validation-for="Name" class="text-danger small"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="CategoryId" class="form-label"></label>
                     <select asp-for="CategoryId" asp-items="Model.CategoryOptions" class="form-select">
-                        <option value="">-- Select Category --</option>
+                        <option value="">Select Category</option>
                     </select>
                     <span asp-validation-for="CategoryId" class="text-danger small"></span>
                 </div>
@@ -37,7 +37,7 @@
 
                 <div class="mb-4" id="optionsGroup" style="display: none;">
                     <label asp-for="OptionsRaw" class="form-label"></label>
-                    <textarea asp-for="OptionsRaw" class="form-control" rows="5" placeholder="Enter each option on a new line:&#10;None&#10;Essentials&#10;Pro&#10;Expert"></textarea>
+                    <textarea asp-for="OptionsRaw" class="form-control" rows="5"></textarea>
                     <span asp-validation-for="OptionsRaw" class="text-danger small"></span>
                     <div class="form-text text-muted">Required for Dropdown attributes. Enter one option per line.</div>
                 </div>

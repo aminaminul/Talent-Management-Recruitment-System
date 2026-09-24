@@ -78,16 +78,14 @@
                                     case TalentManagement.Models.Enums.AttributeType.String:
                                         <input type="text"
                                                asp-for="Attributes[i].Value"
-                                               class="form-control @(attr.HasValidationError ? "border-dark" : "")"
-                                               placeholder="Enter @attr.AttributeName..." />
+                                               class="form-control @(attr.HasValidationError ? "border-dark" : "")" />
                                         break;
 
                                     case TalentManagement.Models.Enums.AttributeType.Number:
                                         <input type="number"
                                                step="any"
                                                asp-for="Attributes[i].Value"
-                                               class="form-control @(attr.HasValidationError ? "border-dark" : "")"
-                                               placeholder="Enter numeric value..." />
+                                               class="form-control @(attr.HasValidationError ? "border-dark" : "")" />
                                         break;
 
                                     case TalentManagement.Models.Enums.AttributeType.Boolean:

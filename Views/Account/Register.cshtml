@@ -16,21 +16,21 @@
 
                 <div class="mb-3">
                     <label asp-for="FullName" class="form-label"></label>
-                    <input asp-for="FullName" class="form-control" placeholder="e.g. Rakib Hasan" />
+                    <input asp-for="FullName" class="form-control" placeholder="" />
                     <span asp-validation-for="FullName" class="text-danger small"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Email" class="form-label"></label>
-                    <input asp-for="Email" class="form-control" placeholder="name@example.com" />
+                    <input asp-for="Email" class="form-control" placeholder="" />
                     <span asp-validation-for="Email" class="text-danger small"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Role" class="form-label"></label>
                     <select asp-for="Role" class="form-select">
-                        <option value="Candidate">Candidate (Apply to jobs, build dynamic CVs, manage projects)</option>
-                        <option value="Recruiter">Recruiter (Post jobs, define dynamic attributes, review candidates)</option>
+                        <option value="Candidate">Candidate</option>
+                        <option value="Recruiter">Recruiter</option>
                     </select>
                     <span asp-validation-for="Role" class="text-danger small"></span>
                 </div>
@@ -38,12 +38,12 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label asp-for="Password" class="form-label"></label>
-                        <input asp-for="Password" class="form-control" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;" />
+                        <input asp-for="Password" class="form-control" placeholder="" />
                         <span asp-validation-for="Password" class="text-danger small"></span>
                     </div>
                     <div class="col-md-6">
                         <label asp-for="ConfirmPassword" class="form-label"></label>
-                        <input asp-for="ConfirmPassword" class="form-control" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;" />
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="" />
                         <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
                     </div>
                 </div>

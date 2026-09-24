@@ -16,13 +16,13 @@
 
                 <div class="mb-3">
                     <label asp-for="Title" class="form-label"></label>
-                    <input asp-for="Title" class="form-control" placeholder="e.g. Sales Prediction System" autofocus />
+                    <input asp-for="Title" class="form-control" autofocus />
                     <span asp-validation-for="Title" class="text-danger small"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Description" class="form-label"></label>
-                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Describe the goal, your role, and key deliverables..."></textarea>
+                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
                     <span asp-validation-for="Description" class="text-danger small"></span>
                 </div>
 
@@ -39,10 +39,10 @@
                         <div class="form-text text-muted">Leave empty if this is an ongoing project.</div>
                     </div>
                 </div>
-
+.... Project link
                 <div class="mb-4">
                     <label asp-for="TagsRaw" class="form-label"></label>
-                    <input asp-for="TagsRaw" class="form-control" placeholder="e.g. Python, SQL, Machine Learning, Docker" />
+                    <input asp-for="TagsRaw" class="form-control" />
                     <span asp-validation-for="TagsRaw" class="text-danger small"></span>
                     <div class="form-text text-muted">Comma-separated skill and technology tags. Reusable across the platform.</div>
                 </div>
