@@ -17,11 +17,30 @@ public static class DbInitializer
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-        await context.Database.MigrateAsync();
+        try
+        {
+            await context.Database.MigrateAsync();
+        }
+        catch
+        {
+            // If MigrateAsync encounters an issue, fallback to direct schema alteration below
+        }
 
         try
         {
-            await context.Database.ExecuteSqlRawAsync("IF COL_LENGTH('Projects', 'ProjectUrl') IS NULL ALTER TABLE Projects ADD ProjectUrl nvarchar(1000) NULL;");
+            await context.Database.ExecuteSqlRawAsync(@"
+                DECLARE @sql NVARCHAR(MAX);
+                IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Projects')
+                BEGIN
+                    IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Projects' AND COLUMN_NAME = 'ProjectUrl')
+                    BEGIN
+                        SELECT TOP 1 @sql = 'ALTER TABLE [' + TABLE_SCHEMA + '].[Projects] ADD [ProjectUrl] NVARCHAR(1000) NULL;'
+                        FROM INFORMATION_SCHEMA.TABLES 
+                        WHERE TABLE_NAME = 'Projects';
+                        EXEC sp_executesql @sql;
+                    END
+                END
+            ");
         }
         catch
         {

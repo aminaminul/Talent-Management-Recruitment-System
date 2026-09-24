@@ -6,10 +6,16 @@
 <div class="row justify-content-center text-center py-5">
     <div class="col-md-6">
         <div class="card p-5">
-            <h1 class="h2 fw-bold mb-3">[SYSTEM NOTICE]</h1>
+            <h1 class="h2 fw-bold mb-3">System Notice</h1>
             <p class="text-muted mb-4">
                 An unexpected error occurred while processing your request. The technical team has been notified.
             </p>
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="alert alert-danger text-start small mb-4">
+                    <strong>Error:</strong> @Model.ErrorMessage
+                </div>
+            }
             @if (Model.ShowRequestId)
             {
                 <div class="small text-muted mb-4">
