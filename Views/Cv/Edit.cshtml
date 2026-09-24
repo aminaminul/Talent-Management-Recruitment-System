@@ -89,14 +89,17 @@
                                         break;
 
                                     case TalentManagement.Models.Enums.AttributeType.Boolean:
+                                        var isBoolChecked = !string.IsNullOrWhiteSpace(attr.Value) && 
+                                            attr.Value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                                                .Any(p => p.Equals("true", StringComparison.OrdinalIgnoreCase) || p == "1" || p.Equals("on", StringComparison.OrdinalIgnoreCase) || p.Equals("yes", StringComparison.OrdinalIgnoreCase));
                                         <div class="form-check mt-2">
-                                            <input type="hidden" name="Attributes[@i].Value" value="false" />
                                             <input type="checkbox"
                                                    id="attr_bool_@i"
                                                    name="Attributes[@i].Value"
                                                    value="true"
                                                    class="form-check-input"
-                                                   @(attr.Value == "true" ? "checked" : "") />
+                                                   @(isBoolChecked ? "checked" : "") />
+                                            <input type="hidden" name="Attributes[@i].Value" value="false" />
                                             <label class="form-check-label" for="attr_bool_@i">
                                                 Yes / Confirmed
                                             </label>

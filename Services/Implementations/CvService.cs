@@ -179,7 +179,9 @@ public class CvService : ICvService
 
             if (input.AttributeType == AttributeType.Boolean)
             {
-                cleanValue = (cleanValue == "true" || cleanValue == "True" || cleanValue == "1") ? "true" : "false";
+                var parts = cleanValue?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) ?? Array.Empty<string>();
+                bool isTrue = parts.Any(p => p.Equals("true", StringComparison.OrdinalIgnoreCase) || p == "1" || p.Equals("on", StringComparison.OrdinalIgnoreCase) || p.Equals("yes", StringComparison.OrdinalIgnoreCase));
+                cleanValue = isTrue ? "true" : "false";
             }
 
             var existingValue = cv.AttributeValues

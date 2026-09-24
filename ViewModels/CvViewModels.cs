@@ -54,7 +54,9 @@ public class CvAttributeDisplayViewModel
 
             if (AttributeType == AttributeType.Boolean)
             {
-                return Value.Equals("true", StringComparison.OrdinalIgnoreCase) ? "Yes" : "No";
+                var parts = Value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                bool isTrue = parts.Any(p => p.Equals("true", StringComparison.OrdinalIgnoreCase) || p == "1" || p.Equals("on", StringComparison.OrdinalIgnoreCase) || p.Equals("yes", StringComparison.OrdinalIgnoreCase));
+                return isTrue ? "Yes" : "No";
             }
 
             return Value;
